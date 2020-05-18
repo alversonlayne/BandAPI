@@ -21,3 +21,4 @@ namespace BandAPI.Entities
         public Guid BandId { get; set; }
     }
 }
+ 
