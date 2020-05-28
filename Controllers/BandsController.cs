@@ -1,4 +1,5 @@
-﻿using BandAPI.Helpers;
+﻿using AutoMapper;
+using BandAPI.Helpers;
 using BandAPI.Models;
 using BandAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,30 +16,34 @@ namespace BandAPI.Controllers
     {
         // Places repository in the controller
         private readonly IBandAlbumRepository _bandAlbumRepository;
-        public BandsController(IBandAlbumRepository bandAlbumRepository)
+        private readonly IMapper _mapper;
+        public BandsController(IBandAlbumRepository bandAlbumRepository, IMapper mapper)
         {
             _bandAlbumRepository = bandAlbumRepository ??
                 throw new ArgumentNullException(nameof(bandAlbumRepository));
+            _mapper = mapper ?? 
+                throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<BandDTO>> GetBands()
         {
             var bandsFromRepo = _bandAlbumRepository.GetBands();
-            var bandsDTO = new List<BandDTO>();
+            //var bandsDTO = new List<BandDTO>();
 
-            foreach(var band in bandsFromRepo) 
-            {
-                bandsDTO.Add(new BandDTO()
-                {
-                    Id = band.Id,
-                    Name = band.Name,
-                    MainGenre = band.MainGenre,
-                    FoundedYearsAgo = $"{band.Founded.ToString("yyyy")} ({band.Founded.GetYearsAgo()} years ago)"
-                });
-            }
+            //foreach(var band in bandsFromRepo) 
+            //{
+            //    bandsDTO.Add(new BandDTO()
+            //    {
+            //        Id = band.Id,
+            //        Name = band.Name,
+            //        MainGenre = band.MainGenre,
+            //        FoundedYearsAgo = $"{band.Founded.ToString("yyyy")} ({band.Founded.GetYearsAgo()} years ago)"
+            //    });
+            //}
+            //return Ok(BandDTO);
 
-            return Ok(bandsDTO);
+            return Ok(_mapper.Map<IEnumerable<BandDTO>>(bandsFromRepo));
         }
 
         [HttpGet("{bandId}")]
