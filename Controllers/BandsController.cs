@@ -26,6 +26,7 @@ namespace BandAPI.Controllers
         }
 
         [HttpGet]
+        [HttpHead]
         public ActionResult<IEnumerable<BandDTO>> GetBands()
         {
             //throw new Exception("testing exceptions");
