@@ -28,6 +28,7 @@ namespace BandAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<BandDTO>> GetBands()
         {
+            //throw new Exception("testing exceptions");
             var bandsFromRepo = _bandAlbumRepository.GetBands();
             //var bandsDTO = new List<BandDTO>();
 
