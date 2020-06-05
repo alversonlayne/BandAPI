@@ -27,10 +27,10 @@ namespace BandAPI.Controllers
 
         [HttpGet]
         [HttpHead]
-        public ActionResult<IEnumerable<BandDTO>> GetBands()
+        public ActionResult<IEnumerable<BandDTO>> GetBands([FromQuery]string mainGenre)
         {
             //throw new Exception("testing exceptions");
-            var bandsFromRepo = _bandAlbumRepository.GetBands();
+            var bandsFromRepo = _bandAlbumRepository.GetBands(mainGenre);
             //var bandsDTO = new List<BandDTO>();
 
             //foreach(var band in bandsFromRepo) 
