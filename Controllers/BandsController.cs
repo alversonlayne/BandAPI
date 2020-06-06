@@ -27,10 +27,13 @@ namespace BandAPI.Controllers
 
         [HttpGet]
         [HttpHead]
-        public ActionResult<IEnumerable<BandDTO>> GetBands([FromQuery]string mainGenre, [FromQuery] string searchQuery)
+        public ActionResult<IEnumerable<BandDTO>> GetBands([FromQuery] BandsResourceParameters bandsResourceParameters)
         {
+            var bandsFromRepo = _bandAlbumRepository.GetBands(bandsResourceParameters);
+            return Ok(_mapper.Map<IEnumerable<BandDTO>>(bandsFromRepo));
+
             //throw new Exception("testing exceptions");
-            var bandsFromRepo = _bandAlbumRepository.GetBands(mainGenre, searchQuery);
+
             //var bandsDTO = new List<BandDTO>();
 
             //foreach(var band in bandsFromRepo) 
@@ -45,7 +48,6 @@ namespace BandAPI.Controllers
             //}
             //return Ok(BandDTO);
 
-            return Ok(_mapper.Map<IEnumerable<BandDTO>>(bandsFromRepo));
         }
 
         [HttpGet("{bandId}")]
